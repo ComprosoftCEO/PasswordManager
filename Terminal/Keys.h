@@ -14,6 +14,11 @@
 #define K_DELETE        7
 #define K_TAB           8
 #define K_ESCAPE        9
+#define K_HOME          10
+#define k_END           11
+#define K_PAGE_UP       12
+#define K_PAGE_DOWN     13
+#define K_INSERT        14
 
 
 //Symbols

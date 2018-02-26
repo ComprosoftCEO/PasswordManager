@@ -3,7 +3,9 @@
 
 #include <Platform.h>
 #include <Keys.h>
+#include <Terminal-String.h>
 
+#include <stdint.h>
 
 //Terminal Errors
 #define ERROR_STREAM   -1
@@ -15,5 +17,11 @@ int init_terminal();
 int close_terminal();
 
 int terminal_getch();
+
+
+
+
+
+
 
 #endif // TERMINAL_HEADER Included

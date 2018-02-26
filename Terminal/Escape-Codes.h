@@ -18,6 +18,13 @@
     #define ESC_DELETE        {27,91,51,126, ESC_TERMINATOR}
     #define ESC_TAB           {9,   ESC_TERMINATOR}
     #define ESC_ESCAPE        {27,  ESC_TERMINATOR}
+    #define ESC_HOME          {27,91,72,  ESC_TERMINATOR}
+    #define ESC_END           {27,91,70,  ESC_TERMINATOR}
+    #define ESC_PAGE_UP       {27,91,53,126,  ESC_TERMINATOR}
+    #define ESC_PAGE_DOWN     {27,91,54,126,  ESC_TERMINATOR}
+    #define ESC_INSERT        {27,91,50,126,  ESC_TERMINATOR}
+
+
 
 #elif defined(PLAT_WINDOWS)
 
@@ -30,6 +37,11 @@
     #define ESC_DELETE        {224,83,  ESC_TERMINATOR}
     #define ESC_TAB           {9,   ESC_TERMINATOR}
     #define ESC_ESCAPE        {27,  ESC_TERMINATOR}
+    #define ESC_HOME          {224,71,  ESC_TERMINATOR}
+    #define ESC_END           {224,79,  ESC_TERMINATOR}
+    #define ESC_PAGE_UP       {224,73,  ESC_TERMINATOR}
+    #define ESC_PAGE_DOWN     {224,81,  ESC_TERMINATOR}
+    #define ESC_INSERT        {224,82,  ESC_TERMINATOR}
 
 #endif
 

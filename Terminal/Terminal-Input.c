@@ -64,7 +64,12 @@ int terminal_getch() {
         {K_BACKSPACE,  (int[]) ESC_BACKSPACE},
         {K_DELETE,     (int[]) ESC_DELETE},
         {K_TAB,        (int[]) ESC_TAB},
-        {K_ESCAPE,     (int[]) ESC_ESCAPE}
+        {K_ESCAPE,     (int[]) ESC_ESCAPE},
+        {K_HOME,       (int[]) ESC_HOME},
+        {k_END,        (int[]) ESC_END},
+        {K_PAGE_UP,    (int[]) ESC_PAGE_UP},
+        {K_PAGE_DOWN,  (int[]) ESC_PAGE_DOWN},
+        {K_INSERT,     (int[]) ESC_INSERT}
     };
 
     int key;
