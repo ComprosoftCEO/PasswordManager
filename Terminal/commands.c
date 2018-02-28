@@ -65,27 +65,33 @@ pTerm_Command_t get_commands_list(const char* string) {
 
     size_t i, j;
     for (i = 0; (i < tkn.count) && (cmd != NULL); ++i) {
+
+        //Count the number of matches (for incomplete tab completion tokens)
+        size_t index, count = 0;
         for (j = 0; (cmd[j].command != NULL) ; ++j) {
+            if (!strncmp(tkn.tokens[i],cmd[j].command,strlen(tkn.tokens[i]))) {++count; index = j;}
+        }
+
+        //Find the first match
+        if (count == 1) {
 
             //Find the first match:
-            if (!strcmp(tkn.tokens[i],cmd[j].command)) {
 
-                switch(cmd[j].sub_type) {
-                case 1:
-                    cmd = (pTerm_Command_t) cmd[j].sub_commands;
-                    break;
+            switch(cmd[index].sub_type) {
+            case 1:
+                cmd = (pTerm_Command_t) cmd[index].sub_commands;
+                break;
 
-                case 2:
-                    cmd = ( (pTerm_Command_t(*)(void)) cmd[j].sub_commands)();
-                    break;
+            case 2:
+                cmd = ( (pTerm_Command_t(*)(void)) cmd[index].sub_commands)();
+                break;
 
-                default:
-                    cmd = NULL;
-                    break;
-                }
-
-                goto next;
+            default:
+                cmd = NULL;
+                break;
             }
+
+            goto next;
         }
 
         cmd = NULL;
