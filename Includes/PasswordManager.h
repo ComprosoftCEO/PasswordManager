@@ -18,7 +18,7 @@ typedef struct PM_Obj_t* pPM_Obj_t;
 #include <heap.h>
 #include <database.h>
 #include <field.h>
-#include <Terminal.h>
+//#include <Terminal.h>
 
 #define MAGIC_WORD 0x00504153534d414e   /* PASSMAN */
 #define MAJOR_VERSION 1
