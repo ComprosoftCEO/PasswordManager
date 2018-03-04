@@ -62,3 +62,4 @@ Backup/
 
 # CodeBlocks
 *.layout
+*.depend
