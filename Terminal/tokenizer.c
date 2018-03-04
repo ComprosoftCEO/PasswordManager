@@ -1,4 +1,4 @@
-#include <Terminal.h>
+#include <tokenizer.h>
 #include <dynamic-array.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,9 +15,9 @@ typedef enum {
 //
 //  Escape Character: (\)
 //  Quote Characters: ' and "
-Term_Tokens_t terminal_tokenizer(const char* input) {
+Tokens_t tokenize_string(const char* input) {
 
-    Term_Tokens_t tkn = {0,0};
+    Tokens_t tkn = {0,0};
     if (!input) {return tkn;}
 
     size_t index = 0;
@@ -99,7 +99,7 @@ Term_Tokens_t terminal_tokenizer(const char* input) {
 
 
 
-void free_tokenizer(Term_Tokens_t tkn) {
+void free_tokenizer(Tokens_t tkn) {
     if (tkn.tokens == NULL) {return;}
 
     size_t i = 0;

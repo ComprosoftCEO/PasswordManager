@@ -1,4 +1,4 @@
-#include <Terminal.h>
+#include <terminal.h>
 #include <stdio.h>
 #include <readline/readline.h>
 

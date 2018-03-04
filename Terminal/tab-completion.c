@@ -1,5 +1,6 @@
 //This file handles all of the fancy tab completion
-#include <Terminal.h>
+#include <terminal.h>
+#include <command.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

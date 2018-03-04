@@ -1,5 +1,6 @@
 #include <PasswordManager.h>
-#include <Terminal.h>
+#include <terminal.h>
+#include <tokenizer.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -12,7 +13,7 @@ int main() {
         if (buf) {
             if (strlen(buf) > 0) {add_history(buf);}
 
-            Term_Tokens_t tkn = terminal_tokenizer(buf);
+            Tokens_t tkn = tokenize_string(buf);
 
             size_t i;
             for(i = 0; i < tkn.count; ++i) {
