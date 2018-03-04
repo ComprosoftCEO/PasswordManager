@@ -7,16 +7,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
-//Terminal Errors
-#define ERROR_STREAM   -1
-#define ERROR_CONSOLE  -2
-
 
 //Struct we use to store a command (used for tab completion)
 #define NO_SUB_PARAMS   NULL,0                      /* Doesn't own sub params */
 #define SUB_PARAMS(arr) (pTerm_Command_t) arr,1     /* Owns a command array */
 #define FUNCTION(arr)   (void*) arr,2               /* Calls a function that builds a command array */
 #define COMMAND_END     NULL,NULL,NULL,-1           /* End of the command array list */
+typedef int (*Term_Func_t)(int argc,char** argv);
 typedef struct TERM_COMMAND {
     char* command;
     char* description;

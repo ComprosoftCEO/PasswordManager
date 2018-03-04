@@ -21,6 +21,9 @@ typedef uint32_t row_t;     //32-Bit row index
 #define ALLOCATION_FAILURE     -3   /* Unable to allocate or resize the memory */
 #define INVALID_ROW            -4
 #define LIST_ERROR             -5   /* The list indexes are broken in some way */
+#define INSERT_ERROR           -6   /* Failed to insert the string in a key or item */
+#define TREE_ERROR             -7   /* Error parsing the tree */
+#define DUPLICATE_KEY          -8   /* Keys cannot have duplicates */
 
 
 // Intermediary buffers for copying data

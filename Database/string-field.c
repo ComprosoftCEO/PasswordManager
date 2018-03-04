@@ -1,4 +1,8 @@
-#include <PasswordManager.h>
+#include <field.h>
+#include <heap.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 //The private string structure
 typedef struct {
@@ -6,7 +10,7 @@ typedef struct {
 	pMem_t data_mem;
 	row_t next_row;		// Where to allocate a new string?
 	row_t max_row;		// Used to determine when to resize strings
-	pField_t parent;    // Useful
+	pField_t me;    // Useful
 } String_Private_t, *pString_Private_t;
 
 
@@ -33,10 +37,11 @@ static int get_string(pField_t,row_t, char**);
 static void free_string_fp(pField_t);
 
 
-pField_t new_string_field(pField_t parent) {
+//The parent field is NOT USED...
+pField_t new_string_field(pField_t p) {
 
 	pField_t field = calloc(1,sizeof(Field_t));
-	pString_Private_t data = calloc(1,sizeof(String_Private_t));
+	pString_Private_t priv = calloc(1,sizeof(String_Private_t));
 
 	field->type = STRING_FIELD;
 
@@ -49,18 +54,18 @@ pField_t new_string_field(pField_t parent) {
 	field->free   = free_string_fp;
 
 	//Private data
-	data->index_mem = new_memory(NULL, 1);      //Initial size: 1Kib Index (128 indexes)
-	data->data_mem =  new_memory(NULL, 2);      //              2Kib Data  (128 16-Byte strings)
-	data->next_row = 1;
-	data->max_row = 128;	/* We can use rows 1 to 128, but 129 > 128 */
-    data->parent = field;
-	field->private = (void*) data;
+	priv->index_mem = new_memory(NULL, 1);      //Initial size: 1Kib Index (128 indexes)
+	priv->data_mem =  new_memory(NULL, 2);      //              2Kib Data  (128 16-Byte strings)
+	priv->next_row = 1;
+	priv->max_row = 128;	/* We can use rows 1 to 128, but 129 > 128 */
+    priv->me = field;
+	field->private = (void*) priv;
 
 
     //Prepare the double-linked-list indexes
     row_t i;
-    pString_Index_t arr = (pString_Index_t) data->index_mem->addr;
-    for (i = 0; i < data->max_row; ++i) {
+    pString_Index_t arr = (pString_Index_t) priv->index_mem->addr;
+    for (i = 0; i < priv->max_row; ++i) {
         arr[i].pre = i;
         arr[i].next = i+2;
     }
@@ -71,10 +76,12 @@ pField_t new_string_field(pField_t parent) {
 static void free_string_fp(pField_t field) {
 	if (!VALIDATE(field,STRING_FIELD)) {return;}
 
+    pString_Private_t priv = (pString_Private_t) field->private;
 
-
-
-	return;
+	free_memory(priv->index_mem,1);
+	free_memory(priv->data_mem,1);
+	free(priv);
+	free(field);
 }
 
 
@@ -164,7 +171,7 @@ static int add_page(pString_Private_t priv, row_t prev) {
     if (prev != NULL_ROW) {(*index_arr)[priv->max_row].pre = prev;}
 
     priv->max_row = max;
-    if (priv->parent->toUpdate) {(*priv->parent->toUpdate)+=1;}   /* Note size update in db header */
+    if (priv->me->toUpdate) {(*priv->me->toUpdate)+=1;}   /* Note size update in db header */
 
     return 0;
 }
