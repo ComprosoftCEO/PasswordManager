@@ -1,6 +1,15 @@
 //This is where the entire structure of commands is defined:
 #include <command.h>
 
+//Where do we start searching for commands???
+static pTerm_Command_t command_set = MAIN_COMMANDS;
+void set_command_set(pTerm_Command_t set) {
+    if (set != NULL) {command_set = set;}
+}
+pTerm_Command_t get_command_set() {return command_set;}
+
+
+
 
 static Term_Command_t SHOW_SUB_COMMANDS[];
 static Term_Command_t UPDATE_SUB_COMMANDS[];

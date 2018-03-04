@@ -39,6 +39,10 @@ typedef pTerm_Command_t (*Term_Command_Func_t)(void);
 //List of command structures
 extern Term_Command_t MAIN_COMMANDS[];
 
+//Set the command set for using different modes
+//  Different modes may use different commands
+void set_command_set(pTerm_Command_t set);
+pTerm_Command_t get_command_set();
 
 
 //Used by tab completion
