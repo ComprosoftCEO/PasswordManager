@@ -88,11 +88,11 @@ Tokens_t tokenize_string(const char* input) {
         toAdd = flush_dynamic_array(str_arr);
         add_array_element(tokens,&toAdd);
     }
-    free_dynamic_array(str_arr);
+    free_dynamic_array(str_arr,NULL);
 
     tkn.count = get_array_count(tokens);
     tkn.tokens = (char**) flush_dynamic_array(tokens);
-    free_dynamic_array(tokens);
+    free_dynamic_array(tokens,NULL);
 
     return tkn;
 }

@@ -3,29 +3,14 @@
 #include <string.h>
 
 
-
-//Convert the sub command code into a command type
-static pTerm_Command_t get_sub_command(pTerm_Command_t cmd) {
-    switch(cmd->sub_type) {
-        case 1:     /* Pointer type */
-            return (pTerm_Command_t) cmd->sub_commands;
-
-        case 2:     /* Function type */
-            return ((Term_Command_Func_t) cmd->sub_commands)();
-
-        default:    /* NULL type */
-            return NULL;
-        }
-}
-
-
-pTerm_Command_t get_commands_list(const char* string) {
+pTerm_Command_t get_commands_list(const char* string, int runFunc) {
 
     Tokens_t tkn = tokenize_string(string);
     pTerm_Command_t cmd = get_command_set();
     if (!tkn.tokens) {return cmd;}
 
     size_t i, j;
+    int state = 0;
     for (i = 0; (i < tkn.count) && (cmd != NULL); ++i) {
 
         //Count the number of matches (for incomplete tab completion tokens)
@@ -36,7 +21,12 @@ pTerm_Command_t get_commands_list(const char* string) {
 
         //Find the first match
         if (count == 1) {
-            cmd = get_sub_command(cmd+index);
+            state |= cmd[index].propagate;
+            if ((state & NO_CMD_SEARCHING) == 0) {
+                cmd = get_sub_command(cmd+index,runFunc && !(state & NO_CMD_FUNCTIONS));
+            } else {
+                cmd = NULL;
+            }
             goto next;
         }
 

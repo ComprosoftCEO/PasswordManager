@@ -13,10 +13,19 @@ typedef struct {
     size_t max;     // Biggest index used (DO NOT MESS WITH THIS!!!)
 } Dynamic_Arr_t, *pDynamic_Arr_t;
 
+typedef void (*Free_Func_t)(void*);
+
 
 pDynamic_Arr_t new_dynamic_array(size_t el_size);
-void free_dynamic_array(pDynamic_Arr_t);
+void free_dynamic_array(pDynamic_Arr_t, Free_Func_t func);
+
+
 void add_array_element(pDynamic_Arr_t arr, const void* new);
+
+//new_arr should be a pointer to an array of element (such as a char*)
+//  If new_arr is a pointer to an array of pointers, use add_p (such as char**)
+void add_array_elements(pDynamic_Arr_t arr, const void* new_arr, size_t count);
+void add_array_elements_p(pDynamic_Arr_t arr, const void** new_ptrs, size_t count);
 
 void set_array_index(pDynamic_Arr_t arr, size_t index);
 void* get_array_element(pDynamic_Arr_t arr, size_t index);

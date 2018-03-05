@@ -29,7 +29,7 @@ static char ** tab_completion(const char *text, int start, int end) {
     //What set of commands should I use
     char* temp_str = strdup(rl_line_buffer);
     temp_str[start] = 0;    //Only use the tokens leading up to this
-    use_com = get_commands_list(temp_str);
+    use_com = get_commands_list(temp_str,1);
     free(temp_str);
 
     return rl_completion_matches(text, tab_generator);

@@ -15,8 +15,16 @@ pDynamic_Arr_t new_dynamic_array(size_t el_size) {
     return arr;
 }
 
-void free_dynamic_array(pDynamic_Arr_t arr) {
+void free_dynamic_array(pDynamic_Arr_t arr, Free_Func_t func) {
     if (!arr) {return;}
+
+    if (func != NULL) {
+        size_t i;
+        for (i = 0; i < get_array_count(arr); ++i) {
+            func(*(void**) get_array_element(arr,i));
+        }
+    }
+
     if (arr->ptr != NULL) {free(arr->ptr);}
     free(arr);
 }
@@ -50,6 +58,31 @@ void add_array_element(pDynamic_Arr_t arr,const void* new) {
     arr->index+=1;
     if (arr->index > arr->max) {arr->max = arr->index;}
 }
+
+
+void add_array_elements(pDynamic_Arr_t arr, const void* new_arr, size_t count) {
+    if (!arr) {return;}
+    if (!new_arr) {return;}
+
+    size_t i;
+    for (i = 0; i < count; ++i) {
+        void* next = (void*) (((char*) new_arr) + (i * arr->el_size));
+        add_array_element(arr,next);
+    }
+}
+
+void add_array_elements_p(pDynamic_Arr_t arr, const void** new_ptrs, size_t count) {
+    if (!arr) {return;}
+    if (!new_ptrs) {return;}
+
+    size_t i;
+    for (i = 0; i < count; ++i) {
+        add_array_element(arr,new_ptrs[i]);
+    }
+
+
+}
+
 
 void set_array_index(pDynamic_Arr_t arr, size_t index) {
     if (!arr) {return;}
