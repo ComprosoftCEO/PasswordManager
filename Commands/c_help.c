@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int c_help(size_t argc, char** argv) {
+int c_help(size_t argc,const char** argv) {
 
     pTerm_Command_t cmd = NULL;
 

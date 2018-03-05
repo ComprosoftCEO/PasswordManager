@@ -14,7 +14,7 @@
 //  -Numb = Exit
 //  0     = Okay
 //  1+    = Switch mode
-typedef int (*Term_Func_t)(size_t argc,char** argv);
+typedef int (*Term_Func_t)(size_t argc,const char** argv);
 
 //Various returns:
 #define CMD_RET_EXIT         -1
@@ -84,14 +84,14 @@ int param_test(size_t expected, size_t given, int atLeast);
 
 
 //********Put all commands here:*********
-int c_nothing(size_t argc, char** argv);
-int c_incomplete(size_t argc, char** argv);
-int c_unknown(size_t argc, char** argv);
-int c_help(size_t argc, char** argv);
-int c_usage(size_t argc, char** argv);
-int c_exit(size_t argc, char** argv);
-int c_edit(size_t argc, char** argv);
-int c_done(size_t argc, char** argv);
+int c_nothing(size_t argc,const char** argv);
+int c_incomplete(size_t argc,const char** argv);
+int c_unknown(size_t argc,const char** argv);
+int c_help(size_t argc,const char** argv);
+int c_usage(size_t argc,const char** argv);
+int c_exit(size_t argc,const char** argv);
+int c_edit(size_t argc,const char** argv);
+int c_done(size_t argc,const char** argv);
 
 
 #endif // COMMAND_HEADER Included

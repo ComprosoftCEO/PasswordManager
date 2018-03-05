@@ -4,7 +4,7 @@
 #include <stddef.h>
 
 //Concatenate a bunch of strings together
-char* concatenate_strings(char** strings, size_t count, char* space);
+char* concatenate_strings(const char** strings, size_t count,const char* space);
 
 
 #endif // CONCATENATOR_HEADER Included

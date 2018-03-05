@@ -2,7 +2,7 @@
 #include <dynamic-array.h>
 #include <string.h>
 
-char* concatenate_strings(char** strings, size_t count, char* space) {
+char* concatenate_strings(const char** strings, size_t count,const char* space) {
 
     pDynamic_Arr_t arr = new_dynamic_array(sizeof(char));
 

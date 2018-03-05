@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int c_usage(size_t argc, char** argv) {
+int c_usage(size_t argc,const char** argv) {
 
     pTerm_Command_t cmd = NULL;
     if (!param_test(1,argc-1,PARAM_ATLEAST)) {return CMD_RET_OK;}
@@ -13,7 +13,7 @@ int c_usage(size_t argc, char** argv) {
 
     if (cmd == NULL) {
 
-        c_unknown(1,&str);
+        c_unknown(1,(const char**) &str);
 
         if (str != NULL) {free(str);}
         return CMD_RET_OK;
