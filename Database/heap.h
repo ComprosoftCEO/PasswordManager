@@ -1,3 +1,4 @@
+//Stores the internal allocated memory for the database
 #ifndef HEAP_HEADER
 #define HEAP_HEADER
 

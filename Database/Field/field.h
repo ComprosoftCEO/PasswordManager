@@ -15,7 +15,7 @@ typedef uint32_t row_t;     //32-Bit row index
 
 #define VALIDATE(FIELD,TYPE) ((FIELD != NULL) && (FIELD->type == TYPE))
 
-//Error codes
+//Field error codes (mostly for debugging)
 #define FUNCTION_NOT_SUPPORTED -1   /* Funciton not supported by the field type */
 #define BAD_OBJECT             -2   /* Null pointer passed */
 #define ALLOCATION_FAILURE     -3   /* Unable to allocate or resize the memory */
@@ -60,6 +60,8 @@ typedef struct FIELD_STRUCT {
 //Field functions
 pField_t new_field(uint32_t type, pField_t parent);
 
+//Wrapper functions for the internal pointers
+//  Return a 0 on success, or a negative on failure
 int field_insert(pField_t field,const char* val);
 int field_delete(pField_t field,row_t row);
 int field_put(pField_t field, const char* str, row_t row);
