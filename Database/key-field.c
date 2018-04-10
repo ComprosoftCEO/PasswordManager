@@ -34,6 +34,7 @@ static int get_key(pField_t,row_t, char**);
 static void free_key_fp(pField_t);
 static int add_key_child(pField_t);
 static int key_next(pField_t,char**);
+static int key_find(pField_t,const char*);
 
 
 

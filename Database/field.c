@@ -37,6 +37,7 @@ static int default_put(pField_t f,const char* s, row_t r) {return FUNCTION_NOT_S
 static int default_next(pField_t f,char** r) {return FUNCTION_NOT_SUPPORTED;}
 static int default_pre(pField_t f,char** r) {return FUNCTION_NOT_SUPPORTED;}
 static int default_add(pField_t f)  {return FUNCTION_NOT_SUPPORTED;}
+static int default_find(pField_t f, const char* find) {return FUNCTION_NOT_SUPPORTED;}
 static void default_free(pField_t f) {
     if (!f) {return;}
     free(f);
@@ -52,6 +53,7 @@ void default_field_functions(pField_t field) {
     field->put = default_put;
     field->next = default_next;
     field->pre = default_pre;
+    field->find = default_find;
     field->add_child = default_add;
     field->free = default_free;
 }

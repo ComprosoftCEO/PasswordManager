@@ -46,6 +46,7 @@ typedef struct FIELD_STRUCT {
 	int (*get)(struct FIELD_STRUCT*,row_t,char** result);
 	int (*next)(struct FIELD_STRUCT*,char** result);
 	int (*pre)(struct FIELD_STRUCT*,char** result);
+    int (*find)(struct FIELD_STRUCT*,const char* search);
 
 	int (*add_child)(struct FIELD_STRUCT*);     //Only used with keys...
 	void (*free)(struct FIELD_STRUCT*);			//Free the object from memory
@@ -65,6 +66,7 @@ int field_put(pField_t field, const char* str, row_t row);
 int field_get(pField_t field, row_t row, char** result);
 int field_next(pField_t field, char** result);
 int field_pre(pField_t field, char** result);
+int field_find(pField_t field, char* search);
 void free_field(pField_t);
 
 //Initialize functions that return an "Invalid Function" error
