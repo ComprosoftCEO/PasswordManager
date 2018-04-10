@@ -1,13 +1,5 @@
-# PasswordManager
+# Password Manager
 __This project is NOT DONE YET__
-
-<br>
-
-## How to Compile
-
-This program is designed to work with the cross-platform IDE [Code::Blocks](http://www.codeblocks.org/). To compile, open PasswordManager.cbp in Code::Blocks, and it should compile.
-
-When compiling for Windows, you might need to define the constant *\_WIN32*. In the Code::Blocks toolbar, go to Settings -> Compiler Settings -> Global Compiler Settings. Under the tab #defines, add the line *\_Win32*.
 
 <br>
 
@@ -16,6 +8,24 @@ When compiling for Windows, you might need to define the constant *\_WIN32*. In 
 * Linux
 
 _This code might run on other platforms, but it has not been configured or tested_
+
+<br>
+
+## Compiling
+
+This program is designed to work with the cross-platform IDE [Code::Blocks](http://www.codeblocks.org/). For Windows platforms, be sure to download and install Code::Blocks with MinGW included.
+
+Before compiling, download and install the [GNU Realine Library](https://tiswww.case.edu/php/chet/readline/rltop.html):
+* __Debian Linux:__ sudo apt-get install libreadline6 libreadline6-dev
+* __Fedora Linux:__ sudo yum install libreadline6 libreadline6-dev
+* __Windows:__ Download [Readline for Windows](http://gnuwin32.sourceforge.net/packages/readline.htm).
+  1. Copy the contents of the "include" folder into _\<CodeBlocks\>\MinGW\include_
+  2. Copy the contents of the "lib" folder into _\<CodeBlocks\>\MinGW\lib_
+  3. Copy the runtime binaries (history5.dll and readline5.dll) into the same folder as the target application (found in _PasswordManager\bin\Debug_ or _PasswordManager\bin\Release_)
+
+When compiling on Windows, you might need to define the constant *\_WIN32*. In the Code::Blocks toolbar, go to Settings -> Compiler Settings -> Global Compiler Settings. Under the tab #defines, add the line *\_Win32*.
+
+Open PasswordManager.cbp in Code::Blocks to edit the project and compile the code.
 
 <br>
 
@@ -28,7 +38,6 @@ PasswordManager is designed to be a full-line command shell. Run it from the ter
 
 ## TODO's
 * Get the Key and Item fields working
-* Write the code that run the command shell
 * Load and save files
 * Validate the loaded fields
 * Encryption with AES and SHA-256
