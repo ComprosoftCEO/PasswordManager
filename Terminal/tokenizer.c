@@ -1,3 +1,4 @@
+//Used to tokenize a string read from the terminal
 #include <tokenizer.h>
 #include <dynamic-array.h>
 #include <stdio.h>

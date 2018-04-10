@@ -2,6 +2,8 @@
 #include <dynamic-array.h>
 #include <string.h>
 
+//Combine two strings together
+//  Mainly used in the terminal for displaying help information
 char* concatenate_strings(const char** strings, size_t count,const char* space) {
 
     pDynamic_Arr_t arr = new_dynamic_array(sizeof(char));
