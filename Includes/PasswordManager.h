@@ -34,5 +34,7 @@ typedef struct PM_Obj_t {
     pField_t string;
 } PM_Obj_t, *pPM_Obj_t;
 
+//Public database object
+extern pPM_Obj_t db;
 
 #endif // PASSWORD_MANAGER_HEADER Included

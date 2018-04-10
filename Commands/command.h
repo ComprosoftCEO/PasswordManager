@@ -93,5 +93,7 @@ int c_exit(size_t argc,const char** argv);
 int c_edit(size_t argc,const char** argv);
 int c_done(size_t argc,const char** argv);
 
+int c_add_account(size_t argc, const char** argv);
+int c_show_accounts(size_t argc, const char** argv);
 
 #endif // COMMAND_HEADER Included

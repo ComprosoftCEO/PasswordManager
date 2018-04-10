@@ -34,8 +34,8 @@ static int default_insert(pField_t f,const char* s) {return FUNCTION_NOT_SUPPORT
 static int default_delete(pField_t f,row_t r)       {return FUNCTION_NOT_SUPPORTED;}
 static int default_get(pField_t f,row_t r, char** c)      {return FUNCTION_NOT_SUPPORTED;}
 static int default_put(pField_t f,const char* s, row_t r) {return FUNCTION_NOT_SUPPORTED;}
-static int default_next(pField_t f) {return FUNCTION_NOT_SUPPORTED;}
-static int default_pre(pField_t f) {return FUNCTION_NOT_SUPPORTED;}
+static int default_next(pField_t f,char** r) {return FUNCTION_NOT_SUPPORTED;}
+static int default_pre(pField_t f,char** r) {return FUNCTION_NOT_SUPPORTED;}
 static int default_add(pField_t f)  {return FUNCTION_NOT_SUPPORTED;}
 static void default_free(pField_t f) {
     if (!f) {return;}
@@ -82,12 +82,12 @@ int field_get(pField_t field, row_t row, char** result) {
     return field->get(field,row,result);
 }
 
-int field_next(pField_t field) {
+int field_next(pField_t field,char** result) {
     if (!field) {return BAD_OBJECT;}
-    return field->next(field);
+    return field->next(field,result);
 }
 
-int field_pre(pField_t field) {
+int field_pre(pField_t field,char** result) {
     if (!field) {return BAD_OBJECT;}
-    return field->pre(field);
+    return field->pre(field,result);
 }

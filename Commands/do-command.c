@@ -80,10 +80,11 @@ int do_command(const char* string) {
 
     pDynamic_Arr_t arr;
     Term_Func_t f = get_command_function(string,&arr);
+    if (strlen(string) <= 0) {return CMD_RET_OK;}
 
     if (f != NULL) {
 
-        int result = f(get_array_count(arr),(char**) arr->ptr);
+        int result = f(get_array_count(arr),(const char**) arr->ptr);
         free_dynamic_array(arr,free);
         return result;
     }

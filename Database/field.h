@@ -24,6 +24,7 @@ typedef uint32_t row_t;     //32-Bit row index
 #define INSERT_ERROR           -6   /* Failed to insert the string in a key or item */
 #define TREE_ERROR             -7   /* Error parsing the tree */
 #define DUPLICATE_KEY          -8   /* Keys cannot have duplicates */
+#define END_OF_LIST            -9   /* Not actually an error, just reached the end of Next*/
 
 
 // Intermediary buffers for copying data
@@ -43,8 +44,8 @@ typedef struct FIELD_STRUCT {
 	int (*delete)(struct FIELD_STRUCT*,row_t);
 	int (*put)(struct FIELD_STRUCT*,const char*, row_t);
 	int (*get)(struct FIELD_STRUCT*,row_t,char** result);
-	int (*next)(struct FIELD_STRUCT*);
-	int (*pre)(struct FIELD_STRUCT*);
+	int (*next)(struct FIELD_STRUCT*,char** result);
+	int (*pre)(struct FIELD_STRUCT*,char** result);
 
 	int (*add_child)(struct FIELD_STRUCT*);     //Only used with keys...
 	void (*free)(struct FIELD_STRUCT*);			//Free the object from memory
@@ -62,8 +63,8 @@ int field_insert(pField_t field,const char* val);
 int field_delete(pField_t field,row_t row);
 int field_put(pField_t field, const char* str, row_t row);
 int field_get(pField_t field, row_t row, char** result);
-int field_next(pField_t field);
-int field_pre(pField_t field);
+int field_next(pField_t field, char** result);
+int field_pre(pField_t field, char** result);
 void free_field(pField_t);
 
 //Initialize functions that return an "Invalid Function" error

@@ -19,7 +19,7 @@ Term_Command_t MAIN_COMMANDS[] = {
     {"edit","","Enable edit mode", c_edit,  NO_SUB_PARAMS},
 
     {"show","<type> [account]","Display account information",    c_incomplete, SUB_PARAMS() {
-        {"accounts","","List database accounts",  NULL,  NO_SUB_PARAMS},
+        {"accounts","","List database accounts",  c_show_accounts,  NO_SUB_PARAMS},
         {"all","<account>","Show username and password",   NULL,  FUNCTION(get_accounts)},
         {"username","<account>","Show username",           NULL,  FUNCTION(get_accounts)},
         {"password","<account>","Show password",           NULL,  FUNCTION(get_accounts)},
@@ -34,7 +34,7 @@ Term_Command_t MAIN_COMMANDS[] = {
 Term_Command_t EDIT_COMMANDS[] = {
     {"help","[command]","Display help screen",              c_help, NO_SUB_PARAMS},
     {"done","","Leave edit mode",          c_done,   NO_SUB_PARAMS},
-    {"add","<account>","Add <account> entry to the database",               NULL,     NO_SUB_PARAMS},
+    {"add","<account>","Add <account> entry to the database",               c_add_account,     NO_SUB_PARAMS},
 
     {"update","<type> <account>","Update existing information",   c_incomplete, SUB_PARAMS() {
         {"all",     "<account>","Update username and password for <account>", NULL, FUNCTION(get_accounts)},

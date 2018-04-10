@@ -1,3 +1,4 @@
+#include <PasswordManager.h>
 #include <terminal.h>
 #include <command.h>
 #include <stdio.h>
@@ -22,7 +23,6 @@ size_t MODE_COUNT = sizeof(ALL_MODES) / sizeof(ALL_MODES[0]);
 void run_terminal() {
 
     init_terminal();
-
 
     int cur_mode = 0;   /* Start in Main Mode */
     set_command_set(ALL_MODES[cur_mode].set);

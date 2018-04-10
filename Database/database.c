@@ -14,14 +14,14 @@ pPM_Obj_t new_password_database() {
     //Create the fields
     if (!(pm->string = new_field(STRING_FIELD,NULL))) {goto error;}
     if (!(pm->account = new_field(KEY_FIELD,pm->string))) {goto error;}
-    if (!(pm->username = new_field(ITEM_FIELD,pm->account))) {goto error;}
-    if (!(pm->password = new_field(ITEM_FIELD,pm->account))) {goto error;}
+    //if (!(pm->username = new_field(ITEM_FIELD,pm->account))) {goto error;}
+    //if (!(pm->password = new_field(ITEM_FIELD,pm->account))) {goto error;}
 
 
     //Also configure the "to update" properties in the header
     pm->account->toUpdate  = &head->key_size;
-    pm->username->toUpdate = &head->uname_size;
-    pm->password->toUpdate = &head->pass_size;
+    //pm->username->toUpdate = &head->uname_size;
+    //pm->password->toUpdate = &head->pass_size;
     pm->string->toUpdate = &head->string_size;
 
     return pm;

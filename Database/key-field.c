@@ -9,7 +9,7 @@
 typedef struct {
 	pMem_t index_mem;       // BTree structure
 	row_t next_row;		    // Where to allocate a new string?
-	row_t search_row;       // What row is the base of the tree
+	row_t root_row;         // What row is the base of the tree
 	row_t max_row;		    // Used to determine when to resize strings
     pField_t str_field;     // Holds the internal strings
     pDynamic_Arr_t subs;    // Sub fields that I own (Internal type: pField_t)
@@ -33,6 +33,8 @@ static int delete_key(pField_t,row_t);
 static int get_key(pField_t,row_t, char**);
 static void free_key_fp(pField_t);
 static int add_key_child(pField_t);
+static int key_next(pField_t,char**);
+
 
 
 //The parent field is the string field...
@@ -47,13 +49,14 @@ pField_t new_key_field(pField_t str_field) {
 	field->insert = insert_key;
 	field->delete = delete_key;
 	field->get    = get_key;
+	field->next   = key_next;
 	field->free   = free_key_fp;
     field->add_child = add_key_child;
 
 	//Private data
 	priv->index_mem = new_memory(NULL, 2);      //Initial size: 2Kib Index (128 indexes, 16 bytes each)
 	priv->next_row = 1;
-	priv->search_row = 0;
+	priv->root_row = 0;
 	priv->max_row = 128;	/* We can use rows 1 to 128 */
 	priv->str_field = str_field;
 	priv->subs = new_dynamic_array(sizeof(pField_t));
@@ -88,14 +91,15 @@ static int insert_key(pField_t field,const char* value) {
 
     //Find where to put into the binary tree
     //  Do this first to avoid duplicates....
-    row_t *update = &priv->search_row;
+    row_t *update = &priv->root_row;
     row_t parent = 0;
-    row_t temp_row = priv->search_row;
+    row_t temp_row = priv->root_row;
 
     while (temp_row != 0) {
 
         char* temp_str;
-        if (field_get(field,temp_row,&temp_str) < 0) {return TREE_ERROR;}
+        int result = field_get(field,temp_row,&temp_str);
+        if (result < 0) {return TREE_ERROR;}
 
         int cmp = strcmp(value,temp_str);
         if (cmp < 0) {
@@ -119,11 +123,11 @@ static int insert_key(pField_t field,const char* value) {
     }
 
     row_t new_row = priv->next_row;
-    priv->next_row = bt[new_row].parent;    // Parent stores the next row
-    bt[new_row].heapStart = priv->str_field->row;
-    bt[new_row].left = 0;
-    bt[new_row].right = 0;
-    bt[new_row].parent = parent;
+    priv->next_row = bt[new_row-1].parent;    // Parent stores the next row
+    bt[new_row-1].heapStart = priv->str_field->row;
+    bt[new_row-1].left = NULL_ROW;
+    bt[new_row-1].right = NULL_ROW;
+    bt[new_row-1].parent = parent;
     *update = new_row;
 
     field->row = new_row;
@@ -136,6 +140,7 @@ static int delete_key(pField_t field,row_t row) {return 0;}
 
 
 static int get_key(pField_t field,row_t row, char** result) {
+
     if (!VALIDATE(field,KEY_FIELD)) {return BAD_OBJECT;}
 
     pKey_Private_t priv = (pKey_Private_t) field->private;
@@ -149,6 +154,54 @@ static int get_key(pField_t field,row_t row, char** result) {
     return field_get(priv->str_field,bt[row-1].heapStart,result);
 }
 
+
+//Result does not get modified if an error occurs
+static int key_next(pField_t field, char** result) {
+    if (!VALIDATE(field,KEY_FIELD)) {return BAD_OBJECT;}
+
+    pKey_Private_t priv = (pKey_Private_t) field->private;
+    pBTree_Index_t bt = (pBTree_Index_t) priv->index_mem->addr;
+    if ((field->row < 0) || (field->row > priv->max_row)) {
+        return INVALID_ROW;
+    }
+
+    if (priv->root_row == NULL_ROW) {return END_OF_LIST;}
+    if (field->row == NULL_ROW) {
+        field->row = priv->root_row;
+        goto finish;
+    }
+
+    //Get the next item in the tree
+    if (bt[field->row-1].left != NULL_ROW) {
+        field->row = bt[field->row-1].left;
+        goto finish;
+    }
+
+try_right:
+    if (bt[field->row-1].right != NULL_ROW) {
+         field->row = bt[field->row-1].right;
+         goto finish;
+    }
+
+try_parent:
+    if (bt[field->row-1].parent != NULL_ROW) {
+
+        //Which side did I come from ???
+        row_t test_row = field->row;
+        field->row = bt[field->row-1].parent;
+        if (bt[field->row-1].left == test_row) {
+            goto try_right;   //I came from the left side
+        } else {
+            goto try_parent;  //I came from the right side
+        }
+    } else {
+        return END_OF_LIST;
+    }
+
+finish:
+    if (bt[field->row-1].heapStart == 0) {return INVALID_ROW;}
+    return field_get(priv->str_field,bt[field->row-1].heapStart,result);
+}
 
 
 
