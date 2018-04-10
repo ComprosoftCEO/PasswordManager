@@ -62,6 +62,10 @@ pField_t new_field(uint32_t type, pField_t parent);
 
 //Wrapper functions for the internal pointers
 //  Return a 0 on success, or a negative on failure
+//
+//  Get, Next, and Pre return the result as a char* (That should NOT be freed)
+//
+//  Next, Pre, and Find store the row in field->row
 int field_insert(pField_t field,const char* val);
 int field_delete(pField_t field,row_t row);
 int field_put(pField_t field, const char* str, row_t row);
