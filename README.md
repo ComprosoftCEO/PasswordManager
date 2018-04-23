@@ -41,3 +41,9 @@ PasswordManager is designed to be a full-line command shell. Run it from the ter
 * Load and save files
 * Validate the loaded fields
 * Encryption with AES and SHA-256
+
+<br>
+
+## Credits
+* AES implementation is from the repository [tiny-AES-c](https://github.com/kokke/tiny-AES-c) by kokke.
+* SHA-256 is from the repository [crypto-algorithms](https://github.com/B-Con/crypto-algorithms/) by Brad Conte (B-Con).
